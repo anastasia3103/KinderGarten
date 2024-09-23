@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Musatova_KinderGratenModel" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdDirection" Type="int" />
+        </EntityType>
+        <EntityType Name="Direction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GroupDS">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdVidGroup" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Journal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateZan" Type="date" Nullable="false" />
+          <Property Name="IsGroupDS" Type="int" Nullable="false" />
+          <Property Name="IdActivity" Type="int" Nullable="false" />
+          <Property Name="IdMark" Type="int" />
+        </EntityType>
+        <EntityType Name="Mark">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VidGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Activity_Direction">
+          <End Role="Direction" Type="Self.Direction" Multiplicity="0..1" />
+          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Direction">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Activity">
+              <PropertyRef Name="IdDirection" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupDS_VidGroup">
+          <End Role="VidGroup" Type="Self.VidGroup" Multiplicity="1" />
+          <End Role="GroupDS" Type="Self.GroupDS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VidGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GroupDS">
+              <PropertyRef Name="IdVidGroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Journal_Activity">
+          <End Role="Activity" Type="Self.Activity" Multiplicity="1" />
+          <End Role="Journal" Type="Self.Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="IdActivity" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Journal_GroupDS">
+          <End Role="GroupDS" Type="Self.GroupDS" Multiplicity="1" />
+          <End Role="Journal" Type="Self.Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupDS">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="IsGroupDS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Journal_Mark">
+          <End Role="Mark" Type="Self.Mark" Multiplicity="0..1" />
+          <End Role="Journal" Type="Self.Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mark">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="IdMark" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище Musatova_KinderGratenModelContainer">
+          <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Direction" EntityType="Self.Direction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GroupDS" EntityType="Self.GroupDS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Journal" EntityType="Self.Journal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mark" EntityType="Self.Mark" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VidGroup" EntityType="Self.VidGroup" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Activity_Direction" Association="Self.FK_Activity_Direction">
+            <End Role="Direction" EntitySet="Direction" />
+            <End Role="Activity" EntitySet="Activity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupDS_VidGroup" Association="Self.FK_GroupDS_VidGroup">
+            <End Role="VidGroup" EntitySet="VidGroup" />
+            <End Role="GroupDS" EntitySet="GroupDS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Journal_Activity" Association="Self.FK_Journal_Activity">
+            <End Role="Activity" EntitySet="Activity" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Journal_GroupDS" Association="Self.FK_Journal_GroupDS">
+            <End Role="GroupDS" EntitySet="GroupDS" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Journal_Mark" Association="Self.FK_Journal_Mark">
+            <End Role="Mark" EntitySet="Mark" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Musatova_KinderGratenModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdDirection" Type="Int32" />
+          <NavigationProperty Name="Direction" Relationship="Self.FK_Activity_Direction" FromRole="Activity" ToRole="Direction" />
+          <NavigationProperty Name="Journal" Relationship="Self.FK_Journal_Activity" FromRole="Activity" ToRole="Journal" />
+        </EntityType>
+        <EntityType Name="Direction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Activity" Relationship="Self.FK_Activity_Direction" FromRole="Direction" ToRole="Activity" />
+        </EntityType>
+        <EntityType Name="GroupDS">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdVidGroup" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="VidGroup" Relationship="Self.FK_GroupDS_VidGroup" FromRole="GroupDS" ToRole="VidGroup" />
+          <NavigationProperty Name="Journal" Relationship="Self.FK_Journal_GroupDS" FromRole="GroupDS" ToRole="Journal" />
+        </EntityType>
+        <EntityType Name="Journal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateZan" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IsGroupDS" Type="Int32" Nullable="false" />
+          <Property Name="IdActivity" Type="Int32" Nullable="false" />
+          <Property Name="IdMark" Type="Int32" />
+          <NavigationProperty Name="Activity" Relationship="Self.FK_Journal_Activity" FromRole="Journal" ToRole="Activity" />
+          <NavigationProperty Name="GroupDS" Relationship="Self.FK_Journal_GroupDS" FromRole="Journal" ToRole="GroupDS" />
+          <NavigationProperty Name="Mark" Relationship="Self.FK_Journal_Mark" FromRole="Journal" ToRole="Mark" />
+        </EntityType>
+        <EntityType Name="Mark">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Journal" Relationship="Self.FK_Journal_Mark" FromRole="Mark" ToRole="Journal" />
+        </EntityType>
+        <EntityType Name="VidGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="GroupDS" Relationship="Self.FK_GroupDS_VidGroup" FromRole="VidGroup" ToRole="GroupDS" />
+        </EntityType>
+        <Association Name="FK_Activity_Direction">
+          <End Role="Direction" Type="Self.Direction" Multiplicity="0..1" />
+          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Direction">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Activity">
+              <PropertyRef Name="IdDirection" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Journal_Activity">
+          <End Role="Activity" Type="Self.Activity" Multiplicity="1" />
+          <End Role="Journal" Type="Self.Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="IdActivity" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupDS_VidGroup">
+          <End Role="VidGroup" Type="Self.VidGroup" Multiplicity="1" />
+          <End Role="GroupDS" Type="Self.GroupDS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VidGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GroupDS">
+              <PropertyRef Name="IdVidGroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Journal_GroupDS">
+          <End Role="GroupDS" Type="Self.GroupDS" Multiplicity="1" />
+          <End Role="Journal" Type="Self.Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupDS">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="IsGroupDS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Journal_Mark">
+          <End Role="Mark" Type="Self.Mark" Multiplicity="0..1" />
+          <End Role="Journal" Type="Self.Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mark">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="IdMark" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Musatova_KinderGratenEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Activity" EntityType="Self.Activity" />
+          <EntitySet Name="Direction" EntityType="Self.Direction" />
+          <EntitySet Name="GroupDS" EntityType="Self.GroupDS" />
+          <EntitySet Name="Journal" EntityType="Self.Journal" />
+          <EntitySet Name="Mark" EntityType="Self.Mark" />
+          <EntitySet Name="VidGroup" EntityType="Self.VidGroup" />
+          <AssociationSet Name="FK_Activity_Direction" Association="Self.FK_Activity_Direction">
+            <End Role="Direction" EntitySet="Direction" />
+            <End Role="Activity" EntitySet="Activity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Journal_Activity" Association="Self.FK_Journal_Activity">
+            <End Role="Activity" EntitySet="Activity" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupDS_VidGroup" Association="Self.FK_GroupDS_VidGroup">
+            <End Role="VidGroup" EntitySet="VidGroup" />
+            <End Role="GroupDS" EntitySet="GroupDS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Journal_GroupDS" Association="Self.FK_Journal_GroupDS">
+            <End Role="GroupDS" EntitySet="GroupDS" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Journal_Mark" Association="Self.FK_Journal_Mark">
+            <End Role="Mark" EntitySet="Mark" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Musatova_KinderGratenModelContainer" CdmEntityContainer="Musatova_KinderGratenEntities">
+          <EntitySetMapping Name="Activity">
+            <EntityTypeMapping TypeName="Musatova_KinderGratenModel.Activity">
+              <MappingFragment StoreEntitySet="Activity">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdDirection" ColumnName="IdDirection" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Direction">
+            <EntityTypeMapping TypeName="Musatova_KinderGratenModel.Direction">
+              <MappingFragment StoreEntitySet="Direction">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupDS">
+            <EntityTypeMapping TypeName="Musatova_KinderGratenModel.GroupDS">
+              <MappingFragment StoreEntitySet="GroupDS">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdVidGroup" ColumnName="IdVidGroup" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Journal">
+            <EntityTypeMapping TypeName="Musatova_KinderGratenModel.Journal">
+              <MappingFragment StoreEntitySet="Journal">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DateZan" ColumnName="DateZan" />
+                <ScalarProperty Name="IsGroupDS" ColumnName="IsGroupDS" />
+                <ScalarProperty Name="IdActivity" ColumnName="IdActivity" />
+                <ScalarProperty Name="IdMark" ColumnName="IdMark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mark">
+            <EntityTypeMapping TypeName="Musatova_KinderGratenModel.Mark">
+              <MappingFragment StoreEntitySet="Mark">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VidGroup">
+            <EntityTypeMapping TypeName="Musatova_KinderGratenModel.VidGroup">
+              <MappingFragment StoreEntitySet="VidGroup">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
